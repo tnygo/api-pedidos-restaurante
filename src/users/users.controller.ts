@@ -13,7 +13,8 @@ import {
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guards'; // ajuste o caminho se necessário
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -23,9 +24,10 @@ export class UsersController {
     return this.usersService.create(data);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Get('protected')
+  getProtected() {
+    return { message: 'Acesso permitido com token!' };
   }
 
   @Get(':id')

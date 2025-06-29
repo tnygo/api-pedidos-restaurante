@@ -9,8 +9,9 @@ import{ AuthMiddleware } from './auth/auth.middleware';
 import { MiddlewareConsumer } from '@nestjs/common';
 import { ErrorsModule } from './errors/errors.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
-  imports: [SharedModule, CoreModule, PedidosModule, UsersModule, ErrorsModule, PrismaModule],
+  imports: [SharedModule, CoreModule, PedidosModule, UsersModule, ErrorsModule, PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 }) 
