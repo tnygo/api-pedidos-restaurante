@@ -1,4 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+import path from 'path';
 
 @Catch(HttpException)
 export class CustomExceptionFilter implements ExceptionFilter {
@@ -9,7 +10,8 @@ export class CustomExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({ 
       statusCode: status,
-      message: exception.message || 'Internal Server Error',
+      path: path.basename(ctx.getRequest().url),
+      message: exception.message || 'Erro interno do servidor',
       timestamp: new Date().toISOString(),});
   }
 }

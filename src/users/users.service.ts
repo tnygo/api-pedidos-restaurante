@@ -1,52 +1,31 @@
-// src/users/user.service.ts
+//import { UserUpdateArgs } from './../../node_modules/.prisma/client/index.d';
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { QueryFilterDto } from './dto/query-filter.dto';
-import { User } from './interfaces/user.interface';
-
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma, User } from '@prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UsersService {
-  private users: User[] = [];
-  private idCounter = 1;
+  constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDto): User {
-    const newUser: User = {
-      id: this.idCounter++,
-      ...createUserDto,
-    };
-    this.users.push(newUser);
-    return newUser;
+  create(data: Prisma.UserCreateInput) {
+    return this.prisma.user.create({ data });
   }
 
-  findAll(filters: QueryFilterDto = {}, page = 1, limit = 10): {
-    total: number;
-    page: number;
-    limit: number;
-    data: User[];
-  } {
-    let filteredUsers = [...this.users];
+  findAll() {
+    return this.prisma.user.findMany();
+  }
 
-    // Filtro por nome
-    if (filters.nome) {
-      filteredUsers = filteredUsers.filter(user =>
-        user.nome.toLowerCase().includes(filters.nome!.toLowerCase()),
-      );
-    }
+  findOne(id: number) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
 
-    // Filtro por ativo
-    if (filters.ativo !== undefined) {
-      filteredUsers = filteredUsers.filter(user => user.ativo === filters.ativo);
-    }
-
-    // Paginação
-    const start = (page - 1) * limit;
-    const end = start + limit;
-
-    return {
-      total: filteredUsers.length,
-      page,
-      limit,
-      data: filteredUsers.slice(start, end),
-    };
+  update(id: number, data: UpdateUserDto) {
+    return this.prisma.user.update({
+      where: { id },
+      data,
+    });
+  }
+  remove(id: number) {
+    return this.prisma.user.delete({ where: { id } });
   }
 }

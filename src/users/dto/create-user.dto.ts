@@ -1,17 +1,15 @@
-// src/users/dto/create-user.dto.ts
-import { IsString, IsInt, ValidateNested, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AddressDto } from './address.dto';
+import { IsEmail, IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class CreateUserDto {
+  @IsNotEmpty()
   @IsString()
-  nome: string;
+  name: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
 
   @IsInt()
-  idade: number;
-
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => AddressDto)
-  endereco?: AddressDto;
+  @Min(0)
+  age: number;
 }

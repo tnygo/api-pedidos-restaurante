@@ -1,46 +1,50 @@
+import { CreateUserDto } from './dto/create-user.dto';
 import {
   Controller,
   Get,
   Post,
   Body,
-  Query,
   Param,
+  Delete,
+  Put,
+  Patch,
   ParseIntPipe,
-  UseInterceptors,
-  UseFilters
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { QueryFilterDto } from './dto/query-filter.dto';
-import { ResponseInterceptor } from '../response/response.interceptor';
-import { CustomExceptionFilter } from 'src/custom-exception/custom-exception.filter';
-import { HttpException } from '@nestjs/common/exceptions/http.exception';
+import { Prisma } from '@prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
-@UseFilters(CustomExceptionFilter)
-@UseInterceptors(ResponseInterceptor) 
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
 
-export class UserController {
-  constructor(private readonly userService: UsersService) {}
-
-  // 1. Criação de usuário com validação (via @Body)
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  create(@Body() data: CreateUserDto) {
+    return this.usersService.create(data);
   }
 
-  // 2. Buscar usuário por ID (via @Param e ParseIntPipe)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    if (id !== '1') {
-      throw new HttpException('Usuário não encontrado', 404);
-    }
-    return { id, name: 'John Doe' };
-  }
-
-  // 3. Listar usuários com filtros e paginação (via @Query)
   @Get()
   findAll() {
-    return [{ id: 1, name: 'John Doe' }];
+    return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
+  }
+
+  @Put(':id')
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateUserDto) {
+    return this.usersService.update(id, data);
+  }
+
+  @Patch(':id')
+  updatePartial(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateUserDto) {
+    return this.usersService.update(id, data);
+  }
+
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id);
   }
 }
