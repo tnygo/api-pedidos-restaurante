@@ -1,38 +1,29 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreatePedidoDto } from './dto/create-pedido.dto';
+import { UpdatePedidoDto } from './dto/update-pedido.dto';
 
 @Injectable()
 export class PedidosService {
-  private pedidos: { id: number; [key: string]: any }[] = [];
+  constructor(private prisma: PrismaService) {}
+
+  create(data: CreatePedidoDto) {
+    return this.prisma.pedido.create({ data });
+  }
 
   findAll() {
-    return this.pedidos;
+    return this.prisma.pedido.findMany({ include: { user: true } });
   }
 
   findOne(id: number) {
-    return this.pedidos.find(pedido => pedido.id === id);
-  }  
-
-  create(pedido: { id: number; [key: string]: any }) {
-    this.pedidos.push(pedido);
-    return pedido;
+    return this.prisma.pedido.findUnique({ where: { id } });
   }
 
-  update(id: number, pedido) {
-    const index = this.pedidos.findIndex(p => p.id === id);
-    if (index !== -1) {
-      this.pedidos[index] = pedido;
-      return pedido;
-    }
-    return null;
+  update(id: number, data: UpdatePedidoDto) {
+    return this.prisma.pedido.update({ where: { id }, data });
   }
 
   remove(id: number) {
-    const index = this.pedidos.findIndex(pedido => pedido.id === id);
-    if (index !== -1) {
-      this.pedidos.splice(index, 1); // Remove da lista
-      return { message: 'Pedido removido com sucesso.' };
-    }
-    return { message: 'Pedido não encontrado.' };
+    return this.prisma.pedido.delete({ where: { id } });
   }
-  
 }
