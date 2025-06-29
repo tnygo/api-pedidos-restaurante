@@ -24,6 +24,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if ('password' in user) {
       user.password = '';  // remover campo sensível
     }
-    return user;  // O valor retornado aqui será atribuído a req.user
+    return {
+    id: payload.sub,
+    email: payload.email,
+    role: payload.role, // ← ESSENCIAL!
+    };  // O valor retornado aqui será atribuído a req.user
   }
 }

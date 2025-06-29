@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AdminModule } from './admin/admin.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SharedModule } from './shared/shared.module';
@@ -11,7 +12,7 @@ import { ErrorsModule } from './errors/errors.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 @Module({
-  imports: [SharedModule, CoreModule, PedidosModule, UsersModule, ErrorsModule, PrismaModule, AuthModule],
+  imports: [SharedModule, CoreModule, PedidosModule, UsersModule, ErrorsModule, PrismaModule, AuthModule, AdminModule],
   controllers: [AppController],
   providers: [AppService],
 }) 
