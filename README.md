@@ -1,98 +1,129 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# ☕ Mozart Coffee – API de Gerenciamento de Pedidos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 👤 Autor
+**Antony Goes**  
+Curso de Ciência da Computação – UTFPR
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 📄 Descrição do Projeto
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A **Mozart Coffee API** é uma aplicação desenvolvida para gerenciar pedidos em um ambiente de cafeteria, permitindo operações como cadastro de usuários, autenticação, criação e gestão de pedidos, além de controle de acesso com níveis de permissão. A API foi construída com NestJS, Prisma ORM e banco de dados MySQL, com deploy em ambiente de produção via Render.
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## 🌐 Link para a API em Produção
 
-## Compile and run the project
+🔗 [https://mozart-coffe.onrender.com](https://mozart-coffe.onrender.com)  
+📚 Swagger (em produção): [https://mozart-coffe.onrender.com/api](https://mozart-coffe.onrender.com/api)
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## ⚙️ Instruções de Execução
 
-# production mode
-$ npm run start:prod
-```
+### ✅ Pré-requisitos
 
-## Run tests
+- **Node.js**: `^18.x`  
+- **NPM**: `^9.x`  
+- **Banco de dados**: MySQL  
+- **Prisma**: CLI embutido ou instalado globalmente
+
+### 📦 Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/tnygo/api-pedidos-restaurante.git
+cd api-pedidos-restaurante
+npm install
 ```
 
-## Deployment
+### ⚙️ Configuração do Banco de Dados
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1. Crie um banco de dados MySQL com o nome `nestdb`.
+2. Copie o arquivo `.env.example` para `.env` e configure a variável `DATABASE_URL`:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```
+DATABASE_URL="mysql://usuario:senha@localhost:3306/nestdb"
+JWT_SECRET="seu_token_secreto"
+```
+
+3. Rode as migrações do Prisma:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npx prisma migrate dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. Gere o client do Prisma:
 
-## Resources
+```bash
+npx prisma generate
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 🚀 Execução local
 
-## Support
+Para rodar a API em modo de desenvolvimento:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npm run start:dev
+```
 
-## Stay in touch
+Acesse a aplicação em:  
+🔗 [http://localhost:3000](http://localhost:3000)  
+📚 Swagger local: [http://localhost:3000/api](http://localhost:3000/api)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 🗂️ Variáveis de Ambiente
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Exemplo de `.env`:
+
+```env
+PORT=3000
+DATABASE_URL="mysql://usuario:senha@localhost:3306/nestdb"
+```
+
+---
+
+## 🧭 Diagrama de Entidade-Relacionamento (ERD)
+
+📌 ![ERD](./docs/diagrama-erd.png) *(adicione a imagem na pasta `docs/` com esse nome)*  
+Ou acesse:  
+🔗 
+![ERD_User_Pedido](https://github.com/user-attachments/assets/a7a61e98-e8a1-4f4f-bd45-ef104466648c)
+
+---
+
+## 📚 Documentação Swagger
+
+- **Produção**: [https://mozart-coffe.onrender.com/api](https://mozart-coffe.onrender.com/api)  
+- **Local**: [http://localhost:3000/api](http://localhost:3000/api)
+
+---
+
+## ✅ Checklist de Funcionalidades
+
+| Funcionalidade                                          | Status     |
+|---------------------------------------------------------|------------|
+| Estrutura modular com NestJS                            | ✅ Concluído |
+| Controllers e Services separados por domínio            | ✅ Concluído |
+| Conexão com banco MySQL via Prisma                      | ✅ Concluído |
+| Migrações de banco com Prisma                           | ✅ Concluído |
+| CRUD completo de pedidos e usuários                     | ✅ Concluído |
+| Autenticação com JWT                                    | ✅ Concluído |
+| Autorização por roles com Guards                        | ✅ Concluído |
+| DTOs com validação (class-validator)                    | ✅ Concluído |
+| Pipes de validação globais                              | ✅ Concluído |
+| Middleware e Interceptadores                            | ✅ Concluído |
+| Testes com Jest                                         | ✅ Concluído |
+| Documentação com Swagger                                | ✅ Concluído |
+| Deploy no Render                                        | ✅ Concluído |
+| Versionamento de rotas com URI                          | ✅ Concluído |
+
+---
+
+## 📂 Licença
+
+Este projeto foi desenvolvido para fins acadêmicos e não possui fins comerciais.
